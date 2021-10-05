@@ -16,14 +16,7 @@ class Movie(_database.Base):
     actors = _sql.column(_sql.ARRAY(_sql.String))
 
 
-'''class Actor(_database.Base):
+class Actor(_database.Base):
     __tablename__ = "actors"
     id = _sql.Column(_sql.Integer, primary_key=True, index=True)
     name = _sql.Column(_sql.String, unique=True, index=True)
-    movies = _orm.relationship("Movie", secondary="movie_actor")
-
-
-class MovieActor(_database.Base):
-    __tablename__ = "movie_actor"
-    movie_id = _sql.Column(_sql.Integer, _sql.ForeignKey("movies.id"), primary_key=True)
-    actor_id = _sql.Column(_sql.Integer, _sql.ForeignKey("actors.id"), primary_key=True)'''
