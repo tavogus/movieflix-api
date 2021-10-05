@@ -21,3 +21,13 @@ def create_movie(db: _orm.Session, movie: _schemas.MovieCreate):
     db.commit()
     db.refresh(db_movie)
     return db_movie
+
+def get_actor_by_name(db: _orm.Session, name: str):
+    return db.query(_models.Actor).filter(_models.Actor.name == name).first()
+
+def create_actor(db: _orm.Session, actor: _schemas.ActorCreate):
+    db_actor = _models.Actor(**actor.dict())
+    db.add(db_actor)
+    db.commit()
+    db.refresh(db_actor)
+    return db_actor   

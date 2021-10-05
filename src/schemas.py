@@ -18,11 +18,11 @@ class Actor(_ActorBase):
 #MOVIE SCHEMAS
 class _MovieBase(_pydantic.BaseModel):
     title: str
-    category: str
-    release_date: str
+    categories: List[str] = []
+    release_date: int
     director: str
     synopsis: str
-    actors: List[Actor] = []
+    actors: List[str] = []
 
 class MovieCreate(_MovieBase):
     pass
