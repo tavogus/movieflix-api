@@ -22,6 +22,12 @@ def create_movie(db: _orm.Session, movie: _schemas.MovieCreate):
     db.refresh(db_movie)
     return db_movie
 
+def get_movies(db: _orm.Session, skip: int = 0, limit: int = 100):
+    return db.query(_models.Movie).offset(skip).limit(limit).all()
+
+def get_movie(db: _orm.Session, movie_id: int):
+    return db.query(_models.Movie).filter(_models.Movie.id == movie_id).first()
+
 def get_actor_by_name(db: _orm.Session, name: str):
     return db.query(_models.Actor).filter(_models.Actor.name == name).first()
 
