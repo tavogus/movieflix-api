@@ -79,6 +79,7 @@ async def get_current_user(
 async def get_movie_by_title(db: _orm.Session, title: str):
     return db.query(_models.Movie).filter(_models.Movie.title == title).first()
 
+
 async def create_movie(db: _orm.Session, movie: _schemas.MovieCreate):
     db_movie = _models.Movie(**movie.dict())
 
@@ -86,6 +87,7 @@ async def create_movie(db: _orm.Session, movie: _schemas.MovieCreate):
     db.commit()
     db.refresh(db_movie)
     return _schemas.Movie.from_orm(db_movie)
+
 
 async def add_actor_to_movie(db: _orm.Session, movie_id: int, actor_id: int):
     db_movie = db.query(_models.Movie).filter(_models.Movie.id == movie_id).first()
@@ -98,10 +100,12 @@ async def add_actor_to_movie(db: _orm.Session, movie_id: int, actor_id: int):
     db.refresh(db_movie)
     return _schemas.Movie.from_orm(db_movie)
 
+
 async def get_movies(db: _orm.Session):
     movies =  db.query(_models.Movie).all()
 
     return list(map(_schemas.Movie.from_orm, movies))
+
 
 async def get_movie(db: _orm.Session, movie_id: int):
     return db.query(_models.Movie).filter(_models.Movie.id == movie_id).first()
@@ -112,12 +116,20 @@ async def get_movie(db: _orm.Session, movie_id: int):
 async def get_actor_by_name(db: _orm.Session, name: str):
     return db.query(_models.Actor).filter(_models.Actor.name == name).first()
 
+
 async def create_actor(db: _orm.Session, actor: _schemas.ActorCreate):
     db_actor = _models.Actor(**actor.dict())
     db.add(db_actor)
     db.commit()
     db.refresh(db_actor)
     return db_actor   
+
+
+async def get_actors(db: _orm.Session):
+    actors = db.query(_models.Actor).all()
+
+    return list(map(_schemas.Actor.from_orm, actors))
+
 
 async def get_actor(db: _orm.Session, actor_id: int):
     return db.query(_models.Actor).filter(_models.Actor.id == actor_id).first()

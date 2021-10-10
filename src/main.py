@@ -8,7 +8,9 @@ app = _fastapi.FastAPI()
 
 _services.create_database()
 
+
 #USER
+
 
 @app.post("/api/users")
 async def create_user(
@@ -40,7 +42,9 @@ async def generate_token(
 async def get_user(user: _schemas.User = _fastapi.Depends(_services.get_current_user)):
     return user
 
+
 #MOVIE
+
 
 @app.post("/movies/", response_model=_schemas.Movie)
 async def create_movie(movie: _schemas.MovieCreate, db: _orm.Session=_fastapi.Depends(_services.get_db)):
@@ -71,6 +75,7 @@ async def get_movie(movie_id: int, db: _orm.Session = _fastapi.Depends(_services
     
     return db_movie
 
+
 #ACTOR
 
 @app.post("/actors/", response_model=_schemas.Actor)
@@ -81,4 +86,10 @@ async def create_actor(actor: _schemas.ActorCreate, db: _orm.Session=_fastapi.De
         raise _fastapi.HTTPException(status_code=400, detail="Already exists a actor with this name")
 
     return await _services.create_actor(db=db, actor=actor)
+
+
+@app.get("/actors/", response_model=List[_schemas.Actor])
+async def get_actors(db: _orm.Session = _fastapi.Depends(_services.get_db),):
+    return await _services.get_actors(db=db)
+
 
